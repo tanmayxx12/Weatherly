@@ -9,21 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = WeatherViewModel()
+    @State var location: String = ""
     
     var body: some View {
-        VStack {
-            if viewModel.isLoading {
-                ProgressView()
-            } else if let weather = viewModel.weatherResponse {
-                Text("City: \(weather.city.name)")
-                    .font(.headline)
+        NavigationStack {
+            VStack {
+                Text(viewModel.weather?.city.name ?? "")
+                
             }
-            
-            
-            
-        }
-        .task {
-            await viewModel.fetchWeather()
+            .navigationTitle("Weather")
+            .searchable(text: $location, prompt: "Search for a location...")
+            .onSubmit(of: .search) {
+                Task {
+                    viewModel.getWeatherForecast(for: location)
+                }
+            }
         }
     }
 }

@@ -220,9 +220,9 @@ struct WeatherDataModel: Codable {
         let rain: Rain?
         
         enum CodingKeys: String, CodingKey {
+            case main, weather, clouds, wind, visibility, pop, sys, rain
             case date = "dt"
             case dateText = "dt_txt"
-            case main, weather, clouds, wind, visibility, pop, sys, rain
         }
     }
     

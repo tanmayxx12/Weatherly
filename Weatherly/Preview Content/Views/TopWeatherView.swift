@@ -14,7 +14,9 @@ struct TopWeatherView: View {
         HStack {
             VStack {
                 Text(weather.city.name)
-                    .font(.headline) 
+                    .font(.headline)
+                
+                Text(weather.forecast.first?.main.temp.description ?? "")
                 
             }
             

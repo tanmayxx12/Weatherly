@@ -5,32 +5,78 @@
 //  Created by Tanmay . on 08/02/25.
 //
 
+import CoreLocation
 import Foundation
+import SwiftUI
 
 @MainActor
 final class WeatherViewModel: ObservableObject {
-    private let apiService = APIService.shared
-//    private let apiKey = "1a363aa93280a7622d9434234fc1f60a"
-    
-    @Published var weatherResponse: WeatherDataModel?
-    @Published var errorMessage: String?
+    @Published var weather: WeatherDataModel?
     @Published var isLoading: Bool = false
+    @Published var location: String = ""
+    @AppStorage("location") var storageLocation: String = ""
+    @Published var locationsArray: [WeatherDataModel] = []
+
+    var appError: AppError? = nil
     
-    func fetchWeather() async {
-        isLoading = true
-        let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=1a363aa93280a7622d9434234fc1f60a&units=metric"
-        
-        do {
-            let response: WeatherDataModel = try await apiService.getJSON(urlString: urlString)
-            self.weatherResponse = response
-        } catch let APIService.APIError.error(errorMessage){
-            self.errorMessage = errorMessage
-        } catch {
-            self.errorMessage = "Unexpected error: \(error.localizedDescription)"
-        }
-        
-        isLoading = false
+    struct AppError: Identifiable {
+        let id = UUID().uuidString
+        let errorString: String
     }
+    
+    
+    // Fetches weather data based on latitude and longitude:
+    func getWeatherForecast(for location: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, MMMd, d"
+        let apiService = APIService.shared
+        
+        Task {
+            do {
+                let placemarks = try await CLGeocoder().geocodeAddressString(location)
+                if let latitude = placemarks.first?.location?.coordinate.latitude,
+                   let longitude = placemarks.first?.location?.coordinate.longitude {
+                    
+                    let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=1a363aa93280a7622d9434234fc1f60a&units=metric"
+                
+                    let weather: WeatherDataModel = try await apiService.getJSON(urlString: urlString, dateDecodingStrategy: .secondsSince1970)
+                    DispatchQueue.main.async {
+                        self.isLoading = true
+                        self.weather = weather
+                        print(weather)
+                    }
+                }
+            } catch let error as CLError {
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    switch error.code {
+                    case .locationUnknown, .geocodeFoundNoResult, .geocodeFoundPartialResult:
+                        self.appError = AppError(errorString: "Unable to determine location from this text.")
+                    case .network:
+                        self.appError = AppError(errorString: "You do not seem to be connected to the network.")
+                    default:
+                        self.appError = AppError(errorString: "Unknown Error occurred: \(error.localizedDescription)")
+                    }
+                    print(error.localizedDescription)
+                }
+            } catch let apiError as APIService.APIError {
+                DispatchQueue.main.async{
+                    self.isLoading = false
+                    if case .error(let errorString) = apiError {
+                        self.appError = AppError(errorString: errorString)
+                        print(errorString)
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.appError = AppError(errorString: error.localizedDescription)
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
 }
 
 
