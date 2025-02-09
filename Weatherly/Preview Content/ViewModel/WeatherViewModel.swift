@@ -12,10 +12,11 @@ import SwiftUI
 @MainActor
 final class WeatherViewModel: ObservableObject {
     @Published var weather: WeatherDataModel?
-    @Published var isLoading: Bool = false
-    @Published var location: String = ""
-    @AppStorage("location") var storageLocation: String = ""
     @Published var locationsArray: [WeatherDataModel] = []
+    @Published var location: String = ""
+    @Published var isLoading: Bool = false
+    @AppStorage("location") var storageLocation: String = ""
+    
 
     var appError: AppError? = nil
     
@@ -43,7 +44,6 @@ final class WeatherViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.isLoading = true
                         self.weather = weather
-                        print(weather)
                     }
                 }
             } catch let error as CLError {

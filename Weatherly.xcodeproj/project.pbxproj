@@ -61,7 +61,6 @@
 		1133F4E02D57778800932BB0 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				1193F1D62D589A6900971A36 /* Managers */,
 				1133F4EC2D57779C00932BB0 /* Model */,
 				1133F4EB2D57779A00932BB0 /* Views */,
 				1133F4EA2D57779700932BB0 /* ViewModel */,
@@ -121,13 +120,6 @@
 				1133F4F92D57858C00932BB0 /* APIService.swift */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		1193F1D62D589A6900971A36 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
