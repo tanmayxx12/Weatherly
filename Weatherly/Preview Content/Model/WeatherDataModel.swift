@@ -96,6 +96,10 @@ struct WeatherDataModel: Codable {
         let condition: String  //WeatherCondition
         let description: String // Description
         let icon: String  // WeatherIcon
+        var weatherIconURL: URL{
+            let urlString = "https://openweathermap.org/img/wn/\(icon)@2x.png"
+            return URL(string: urlString)!
+        }
         
         enum CodingKeys: String, CodingKey {
             case id, description, icon  // , icon -> If at all i decide to use the icon

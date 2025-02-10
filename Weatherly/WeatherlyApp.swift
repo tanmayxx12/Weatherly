@@ -12,7 +12,7 @@ struct WeatherlyApp: App {
     @StateObject private var viewModel = WeatherViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: WeatherViewModel(isPreview: true))
                 .environmentObject(viewModel)
         }
     }

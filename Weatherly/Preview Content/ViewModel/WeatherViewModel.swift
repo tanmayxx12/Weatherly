@@ -25,9 +25,56 @@ final class WeatherViewModel: ObservableObject {
         let errorString: String
     }
     
-//    init(weather: WeatherDataModel) {
-//        self.weather = weather
-//    }
+    init(isPreview: Bool = false) {
+        if isPreview {
+            self.weather = DeveloperPreview.instance.previewData
+            self.locationsArray = [DeveloperPreview.instance.previewData]
+        }
+    }
+    
+    // Weather icons:
+    /*
+     func weatherIcon(for condition: String) -> Image {
+         switch condition {
+         case "Clear":
+             return Image(systemName: "sun.max.fill")
+         case "Clouds":
+             return Image(systemName: "cloud.fill")
+         case "Rain":
+             return Image(systemName: "cloud.rain.fill")
+         case "Snow":
+             return Image(systemName: "cloud.snow.fill")
+         default:
+             return Image(systemName: "questionmark")
+         }
+     }
+     */
+    
+    // For Daily Forecasts:
+    public struct DailyForecast {
+        let day: String
+        let maxTemp: Double
+        let minTemp: Double
+        let main: String
+    }
+    
+    public var dailyForecasts: [DailyForecast] {
+        let groupedData = Dictionary(grouping: weather?.forecast ?? [] ) { (element) -> String in
+            return String(element.dateText.prefix(10))
+        }
+        
+        return groupedData.compactMap { (key, values) in
+            guard let maxTemp = values.max(by: { $0.main.tempMax < $1.main.tempMax }),
+                  let minTemp = values.min(by: { $0.main.tempMin < $1.main.tempMin }),
+                  let firstWeather = maxTemp.weather.first else {
+                return DailyForecast(day: key, maxTemp: 0.0, minTemp: 0.0, main: "unknown")
+            }
+            return DailyForecast(day: String(key),
+                                 maxTemp: maxTemp.main.tempMax,
+                                 minTemp: minTemp.main.tempMin,
+                                 main: firstWeather.condition)
+        }
+    }
     
     
     // Fetches weather data based on latitude and longitude:
