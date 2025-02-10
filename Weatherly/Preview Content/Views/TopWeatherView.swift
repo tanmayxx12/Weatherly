@@ -13,21 +13,36 @@ struct TopWeatherView: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-               
+            VStack(alignment: .leading, spacing: 6) {
+                Text("\(weather.forecast.first?.dateText.formatDateText() ?? "")")
                 
-            
+                Text("\(viewModel.formatTemperature(weather.forecast.first?.main.temp ?? 0))°")
+                    .font(.largeTitle)
+                    .bold()
                 
+                Text("\(weather.city.name.capitalized)")
+                    .font(.title2)
+                    .bold()
             }
             
+            Spacer()
             
+            AsyncImage(url: weather.forecast.first?.weather.first?.weatherIconURL) { image in
+                image
+                    .frame(width: 120, height: 120)
+            } placeholder: {
+                ProgressView()
+            }
         }
-        .padding()
+        .frame(height: 130)
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal)
         .background(.ultraThinMaterial)
-        .cornerRadius(20)
+        .cornerRadius(10)
+        .padding(.horizontal)
     }
 }
 
-//#Preview {
-//    TopWeatherView(weather: weather, viewModel: <#T##WeatherViewModel#>)
-//}
+#Preview {
+    TopWeatherView(weather: DeveloperPreview.instance.previewData, viewModel: WeatherViewModel(isPreview: true))
+}

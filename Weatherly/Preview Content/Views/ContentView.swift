@@ -14,19 +14,15 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
-            
+                
                 List(viewModel.locationsArray, id: \.city.id) { weather in
                     NavigationLink {
                         DetailView(weather: weather, viewModel: viewModel)
                     } label: {
                         ListRowView(weather: weather, viewModel: viewModel)
                     }
-                    
                 }
                 .listStyle(.plain)
-                
-                
-                
             }
             .navigationTitle("Weather")
             .searchable(text: $location, prompt: "Search for a location...")
@@ -40,7 +36,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(viewModel: WeatherViewModel(isPreview: true))
+    ContentView(viewModel: WeatherViewModel(isPreview: false))
 }
 
 
