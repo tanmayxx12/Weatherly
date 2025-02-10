@@ -14,6 +14,8 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
+                
+                
                 Text(viewModel.weather?.city.name ?? "")
                 Text("date: \(viewModel.weather?.forecast.first?.date ?? 0)")
                 Text("sunrise: \(viewModel.weather?.city.sunrise ?? 0)")
@@ -24,7 +26,8 @@ struct ContentView: View {
                 Text("tempMax: \(viewModel.weather?.forecast.first?.main.tempMax ?? 0)°C")
                 Text("humidity: \(viewModel.weather?.forecast.first?.main.humidity ?? 0)")
                 Text("wind: \(viewModel.weather?.forecast.first?.wind.speed ?? 0)m/s")
-
+                Text("description: \(viewModel.weather?.forecast.first?.weather.first?.description ?? "")")
+                
                 
             }
             .navigationTitle("Weather")
