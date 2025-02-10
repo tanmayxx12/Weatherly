@@ -68,6 +68,21 @@ class DeveloperPreview {
                 sunset: 1738946001
             )
         )
+}
+
+extension DeveloperPreview {
+    
+    func formatTemperature(_ temp: Double, toFahrenheit: Bool = false) -> String {
+        return toFahrenheit ? temp.toFahrenheit() : temp.roundedString
+    }
+    
+    func formatWindSpeed(_ speed: Double) -> String {
+        return speed.roundedString
+    }
+    
+    func formateDate(_ timeStamp: Int, format: String) -> String {
+        return timeStamp.toDateString(format: format)
+    }
     
 }
 

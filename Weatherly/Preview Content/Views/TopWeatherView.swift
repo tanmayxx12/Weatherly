@@ -9,22 +9,25 @@ import SwiftUI
 
 struct TopWeatherView: View {
     let weather: WeatherDataModel
+    let viewModel: WeatherViewModel
     
     var body: some View {
         HStack {
-            VStack {
-                Text(weather.city.name)
-                    .font(.headline)
+            VStack(alignment: .leading) {
+               
                 
-                Text(weather.forecast.first?.main.temp.description ?? "")
+            
                 
             }
             
             
         }
+        .padding()
+        .background(.ultraThinMaterial)
+        .cornerRadius(20)
     }
 }
 
-#Preview {
-    TopWeatherView(weather: DeveloperPreview.instance.previewData)
-}
+//#Preview {
+//    TopWeatherView(weather: weather, viewModel: <#T##WeatherViewModel#>)
+//}

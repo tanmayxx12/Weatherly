@@ -25,6 +25,10 @@ final class WeatherViewModel: ObservableObject {
         let errorString: String
     }
     
+//    init(weather: WeatherDataModel) {
+//        self.weather = weather
+//    }
+    
     
     // Fetches weather data based on latitude and longitude:
     func getWeatherForecast(for location: String) {
@@ -44,6 +48,12 @@ final class WeatherViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.isLoading = true
                         self.weather = weather
+                        
+                        // Preventing duplicate locations from being added in the locationsArray:
+                        if !self.locationsArray.contains(where: { $0.city.name.lowercased() == weather.city.name.lowercased() }) {
+                            self.locationsArray.append(weather)
+                        }
+                        
                     }
                 }
             } catch let error as CLError {
@@ -75,6 +85,23 @@ final class WeatherViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+}
+
+extension WeatherViewModel {
+    
+    
+    func formatTemperature(_ temp: Double, toFahrenheit: Bool = false) -> String {
+        return toFahrenheit ? temp.toFahrenheit() : temp.roundedString
+    }
+    
+    func formatWindSpeed(_ speed: Double) -> String {
+        return speed.roundedString
+    }
+    
+    func formateDate(_ timeStamp: Int, format: String) -> String {
+        return timeStamp.toDateString(format: format)
     }
     
 }

@@ -16,6 +16,9 @@
 		1133F4FC2D5788F300932BB0 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1133F4FB2D5788F300932BB0 /* WeatherViewModel.swift */; };
 		1133F4FE2D57DA4900932BB0 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1133F4FD2D57DA4900932BB0 /* PreviewProvider.swift */; };
 		1133F5002D57DE3500932BB0 /* TopWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1133F4FF2D57DE3500932BB0 /* TopWeatherView.swift */; };
+		11DAE1662D59EEF3001627B9 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DAE1652D59EEF3001627B9 /* Double.swift */; };
+		11DAE1682D59EFA6001627B9 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DAE1672D59EFA6001627B9 /* Int.swift */; };
+		11DAE16A2D59F2C7001627B9 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DAE1692D59F2C7001627B9 /* String.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,9 @@
 		1133F4FB2D5788F300932BB0 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		1133F4FD2D57DA4900932BB0 /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		1133F4FF2D57DE3500932BB0 /* TopWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopWeatherView.swift; sourceTree = "<group>"; };
+		11DAE1652D59EEF3001627B9 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		11DAE1672D59EFA6001627B9 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		11DAE1692D59F2C7001627B9 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,9 @@
 			isa = PBXGroup;
 			children = (
 				1133F4FD2D57DA4900932BB0 /* PreviewProvider.swift */,
+				11DAE1652D59EEF3001627B9 /* Double.swift */,
+				11DAE1672D59EFA6001627B9 /* Int.swift */,
+				11DAE1692D59F2C7001627B9 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -197,9 +206,12 @@
 			files = (
 				1133F5002D57DE3500932BB0 /* TopWeatherView.swift in Sources */,
 				1133F4FC2D5788F300932BB0 /* WeatherViewModel.swift in Sources */,
+				11DAE16A2D59F2C7001627B9 /* String.swift in Sources */,
+				11DAE1662D59EEF3001627B9 /* Double.swift in Sources */,
 				1133F4FE2D57DA4900932BB0 /* PreviewProvider.swift in Sources */,
 				1133F4E52D57778800932BB0 /* ContentView.swift in Sources */,
 				1133F4E62D57778800932BB0 /* WeatherlyApp.swift in Sources */,
+				11DAE1682D59EFA6001627B9 /* Int.swift in Sources */,
 				1133F4FA2D57858C00932BB0 /* APIService.swift in Sources */,
 				1133F4EE2D57781500932BB0 /* WeatherDataModel.swift in Sources */,
 			);
