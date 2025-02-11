@@ -19,18 +19,6 @@ struct DetailView: View {
                     TopWeatherView(weather: weather)
                     
                     // MARK: Horizontal Scroll View (Hourly Forecast):
-                    /*
-                     ScrollView(.horizontal) {
-                        Text("Hourly Forecast will come here")
-                     }
-                     .frame(height: 120)
-                     .frame(maxWidth: .infinity)
-                     .background(.ultraThinMaterial)
-                     .cornerRadius(10)
-                     .padding(.horizontal)
-                     */
-                   
-                    
                     HourlyForecastView(weather: weather)
                     
                     // MARK: Sunrise/Sunset View
@@ -45,7 +33,6 @@ struct DetailView: View {
                     
                 }
             }
-            
         }
     }
 }

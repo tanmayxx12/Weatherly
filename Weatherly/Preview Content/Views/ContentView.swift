@@ -10,24 +10,43 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
     @State var location: String = ""
+    @State private var editMode: EditMode = .inactive
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
                 
-                List(viewModel.locationsArray, id: \.city.id) { weather in
-                    NavigationLink {
-                        DetailView(weather: weather)
-                    } label: {
-                        ListRowView(weather: weather)
+//                List(viewModel.locationsArray, id: \.city.id) { weather in
+//                    NavigationLink {
+//                        DetailView(weather: weather)
+//                    } label: {
+//                        ListRowView(weather: weather)
+//                    }
+//                }
+//                .listStyle(.plain)
+                
+                List{
+                    ForEach(viewModel.locationsArray, id: \.city.id) { weather in
+                        NavigationLink {
+                            DetailView(weather: weather)
+                                .padding(6)
+                        } label: {
+                            ListRowView(weather: weather)
+                        }
                     }
+                    .onDelete(perform: viewModel.deleteLocation)
+                    .onMove(perform: viewModel.moveLocation)
                 }
-                .listStyle(.plain)
+                
             }
             .navigationTitle("Weather")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
+                        // Edit Button:
+                        EditButton()
+                        
+                        Divider()
                         
                         // Celsius Button
                         Button {
@@ -59,7 +78,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .searchable(text: $location, prompt: "Search for a location...")
+            .searchable(text: $location, prompt: "Search for a city")
             .onSubmit(of: .search) {
                 Task {
                     viewModel.getWeatherForecast(for: location)

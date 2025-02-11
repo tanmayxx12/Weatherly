@@ -136,6 +136,16 @@ final class WeatherViewModel: ObservableObject {
         storedIsFahrenheit = isFahrenheit
     }
     
+    // Method to delete the item in the list:
+    func deleteLocation(at indexSet: IndexSet) {
+        locationsArray.remove(atOffsets: indexSet)
+    }
+    
+    // Method to move locations in the list:
+    func moveLocation(from: IndexSet, to: Int) {
+        locationsArray.move(fromOffsets: from, toOffset: to)
+    }
+    
 }
 
 extension WeatherViewModel {
