@@ -150,7 +150,6 @@ final class WeatherViewModel: ObservableObject {
 
 extension WeatherViewModel {
     
-    
     func formatTemperature(_ temp: Double) -> String {
         return isFahrenheit ? temp.toFahrenheit() : temp.roundedString
     }

@@ -52,6 +52,7 @@ struct HourlyForecastView: View {
             .padding(.horizontal)
         }
         .frame(height: 140)
+        .padding(6)
     }
 }
 
