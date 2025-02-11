@@ -12,7 +12,7 @@ struct WeatherDataModel: Codable {
     let message: Int
     let cnt: Int
     let forecast: [Forecast]
-    let city: City
+    var city: City // changed from let to var so as to override the data coming from the server
 
     enum CodingKeys: String, CodingKey {
         case cod, message, cnt, city
@@ -22,7 +22,7 @@ struct WeatherDataModel: Codable {
     // MARK: City
     struct City: Codable {
         let id: Int
-        let name: String
+        var name: String // changed from let to var so as to override the data coming from the server
         let coordinates: Coordinates
         let country: String
         let population: Int

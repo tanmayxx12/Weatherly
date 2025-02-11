@@ -17,6 +17,9 @@ final class WeatherViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @AppStorage("location") var storageLocation: String = ""
     
+    // Adding a new property to store the searched city name:
+    @Published var searchedCity: String = ""
+    
 
     var appError: AppError? = nil
     
@@ -66,6 +69,8 @@ final class WeatherViewModel: ObservableObject {
         dateFormatter.dateFormat = "E, MMMd, d"
         let apiService = APIService.shared
         
+        self.searchedCity = location
+        
         Task {
             do {
                 let placemarks = try await CLGeocoder().geocodeAddressString(location)
@@ -79,9 +84,14 @@ final class WeatherViewModel: ObservableObject {
                         self.isLoading = true
                         self.weather = weather
                         
+                        // Override the city name with what the user typed:
+                        self.weather?.city.name = self.searchedCity
+                        
                         // Preventing duplicate locations from being added in the locationsArray:
-                        if !self.locationsArray.contains(where: { $0.city.name.lowercased() == weather.city.name.lowercased() }) {
-                            self.locationsArray.append(weather)
+                        // Made a change here, created a modified weather variable: 
+                        if let modifiedWeather = self.weather ,
+                           !self.locationsArray.contains(where: { $0.city.name.lowercased() == weather.city.name.lowercased() }) {
+                            self.locationsArray.append(modifiedWeather)
                         }
                         
                     }
