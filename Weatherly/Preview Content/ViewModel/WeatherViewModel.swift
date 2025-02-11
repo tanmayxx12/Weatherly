@@ -16,11 +16,14 @@ final class WeatherViewModel: ObservableObject {
     @Published var location: String = ""
     @Published var isLoading: Bool = false
     @AppStorage("location") var storageLocation: String = ""
+    @Published var isFahrenheit: Bool = false
+    @AppStorage("isFahrenheit") var storedIsFahrenheit: Bool = false
     
     // Adding a new property to store the searched city name:
     @Published var searchedCity: String = ""
     
-
+   
+    
     var appError: AppError? = nil
     
     struct AppError: Identifiable {
@@ -33,6 +36,7 @@ final class WeatherViewModel: ObservableObject {
             self.weather = DeveloperPreview.instance.previewData
             self.locationsArray = [DeveloperPreview.instance.previewData]
         }
+        self.isFahrenheit = storedIsFahrenheit
     }
     
     
@@ -127,13 +131,18 @@ final class WeatherViewModel: ObservableObject {
         }
     }
     
+    func toggleTemperatureUnit() {
+        isFahrenheit.toggle()
+        storedIsFahrenheit = isFahrenheit
+    }
+    
 }
 
 extension WeatherViewModel {
     
     
-    func formatTemperature(_ temp: Double, toFahrenheit: Bool = false) -> String {
-        return toFahrenheit ? temp.toFahrenheit() : temp.roundedString
+    func formatTemperature(_ temp: Double) -> String {
+        return isFahrenheit ? temp.toFahrenheit() : temp.roundedString
     }
     
     func formatWindSpeed(_ speed: Double) -> String {

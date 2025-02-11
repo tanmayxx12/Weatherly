@@ -25,6 +25,40 @@ struct ContentView: View {
                 .listStyle(.plain)
             }
             .navigationTitle("Weather")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        
+                        // Celsius Button
+                        Button {
+                            viewModel.isFahrenheit = false
+                        } label: {
+                            HStack {
+                                Text("Celsius")
+                                Spacer()
+                                Image(systemName: "degreesign.celsius")
+                            }
+                            .font(.headline)
+                        }
+                        
+                        // Fahrenheit Button
+                        Button {
+                            viewModel.isFahrenheit = true
+                        } label: {
+                            HStack {
+                                Text("Fahrenheit")
+                                Spacer()
+                                Image(systemName: "degreesign.fahrenheit")
+                            }
+                            .font(.headline)
+                        }
+
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
+                            .foregroundStyle(.primary)
+                    }
+                }
+            }
             .searchable(text: $location, prompt: "Search for a location...")
             .onSubmit(of: .search) {
                 Task {
