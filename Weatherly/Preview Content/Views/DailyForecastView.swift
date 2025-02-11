@@ -31,6 +31,7 @@ struct DailyForecastView: View {
                          image
                              .resizable()
                              .frame(width: 50, height: 50)
+                             .shadow(radius: 5, x: 0, y: 4)
                      } placeholder: {
                          ProgressView()
                      }

@@ -94,7 +94,7 @@ final class WeatherViewModel: ObservableObject {
                         // Preventing duplicate locations from being added in the locationsArray:
                         // Made a change here, created a modified weather variable: 
                         if let modifiedWeather = self.weather ,
-                           !self.locationsArray.contains(where: { $0.city.name.lowercased() == weather.city.name.lowercased() }) {
+                           !self.locationsArray.contains(where: { $0.city.name.lowercased() == modifiedWeather.city.name.lowercased() }) {
                             self.locationsArray.append(modifiedWeather)
                         }
                         
