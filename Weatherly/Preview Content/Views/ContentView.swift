@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel: WeatherViewModel
+    @EnvironmentObject var viewModel: WeatherViewModel
     @State var location: String = ""
     
     var body: some View {
@@ -17,9 +17,9 @@ struct ContentView: View {
                 
                 List(viewModel.locationsArray, id: \.city.id) { weather in
                     NavigationLink {
-                        DetailView(weather: weather, viewModel: viewModel)
+                        DetailView(weather: weather)
                     } label: {
-                        ListRowView(weather: weather, viewModel: viewModel)
+                        ListRowView(weather: weather)
                     }
                 }
                 .listStyle(.plain)
@@ -36,7 +36,8 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(viewModel: WeatherViewModel(isPreview: false))
+    ContentView()
+        .environmentObject(WeatherViewModel(isPreview: true))
 }
 
 

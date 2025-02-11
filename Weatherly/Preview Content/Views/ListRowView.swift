@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct ListRowView: View {
+    @EnvironmentObject var viewModel: WeatherViewModel
     let weather: WeatherDataModel
-    let viewModel: WeatherViewModel
+//    let viewModel: WeatherViewModel
     
     var body: some View {
         HStack {
@@ -47,5 +48,6 @@ struct ListRowView: View {
 }
 
 #Preview {
-    ListRowView(weather: DeveloperPreview.instance.previewData, viewModel: WeatherViewModel(isPreview: true))
+    ListRowView(weather: DeveloperPreview.instance.previewData)
+        .environmentObject(WeatherViewModel(isPreview: true))
 }

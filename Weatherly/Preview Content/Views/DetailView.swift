@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct DetailView: View {
+    @EnvironmentObject var viewModel: WeatherViewModel
     let weather: WeatherDataModel
-    let viewModel: WeatherViewModel
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 10) {
                     // MARK: Top Weather View
-                    TopWeatherView(weather: weather, viewModel: viewModel)
+                    TopWeatherView(weather: weather)
                     
                     // MARK: Horizontal Scroll View (Hourly Forecast):
                     /*
@@ -31,17 +31,17 @@ struct DetailView: View {
                      */
                    
                     
-                    HourlyForecastView(weather: weather, viewModel: viewModel)
+                    HourlyForecastView(weather: weather)
                     
                     // MARK: Sunrise/Sunset View
                     SunriseSunsetView(weather: weather)
                     
                     
                     // MARK: Indicators View
-                    IndicatorsView(weather: weather, viewModel: viewModel)
+                    IndicatorsView(weather: weather)
                     
                     // MARK: Daily Forecast View
-                    DailyForecastView(weather: weather, viewModel: viewModel)
+                    DailyForecastView(weather: weather)
                     
                 }
             }
@@ -51,5 +51,6 @@ struct DetailView: View {
 }
 
 #Preview {
-    DetailView(weather: DeveloperPreview.instance.previewData, viewModel: WeatherViewModel(isPreview: true))
+    DetailView(weather: DeveloperPreview.instance.previewData)
+        .environmentObject(WeatherViewModel(isPreview: true))
 }

@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct IndicatorsView: View {
+    @EnvironmentObject var viewModel: WeatherViewModel
     let weather: WeatherDataModel
-    let viewModel: WeatherViewModel
+//    let viewModel: WeatherViewModel
     
     var body: some View {
         HStack {
@@ -85,5 +86,6 @@ struct IndicatorsView: View {
 }
 
 #Preview {
-    IndicatorsView(weather: DeveloperPreview.instance.previewData, viewModel: WeatherViewModel(isPreview: true))
+    IndicatorsView(weather: DeveloperPreview.instance.previewData)
+        .environmentObject(WeatherViewModel(isPreview: true))
 }

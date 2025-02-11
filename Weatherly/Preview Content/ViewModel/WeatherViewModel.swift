@@ -32,23 +32,6 @@ final class WeatherViewModel: ObservableObject {
         }
     }
     
-    // Weather icons:
-    /*
-     func weatherIcon(for condition: String) -> Image {
-         switch condition {
-         case "Clear":
-             return Image(systemName: "sun.max.fill")
-         case "Clouds":
-             return Image(systemName: "cloud.fill")
-         case "Rain":
-             return Image(systemName: "cloud.rain.fill")
-         case "Snow":
-             return Image(systemName: "cloud.snow.fill")
-         default:
-             return Image(systemName: "questionmark")
-         }
-     }
-     */
     
     // For Daily Forecasts:
     public struct DailyForecast {
