@@ -49,7 +49,7 @@ struct WeatherDataModel: Codable {
     
     // MARK: Forecast
     struct Forecast: Codable {
-        let date: Int // Might have to change this to Int
+        let date: Int 
         let main: MainInfo
         let weather: [Weather]
         let clouds: Clouds
@@ -102,7 +102,7 @@ struct WeatherDataModel: Codable {
         }
         
         enum CodingKeys: String, CodingKey {
-            case id, description, icon  // , icon -> If at all i decide to use the icon
+            case id, description, icon
             case condition = "main"
         }
     }
@@ -147,33 +147,4 @@ struct WeatherDataModel: Codable {
         case day = "d"
         case night = "n"
     }
-    
-    // Weather Condition:
-    /*
-     enum WeatherCondition: String, Codable {
-         case clouds
-         case rain
-     }
-     */
-    
-    // Description:
-    /*
-     enum Description: String, Codable {
-         case lightRain
-         case moderateRain
-         case overcastClouds
-     }
-     */
-   
-    // WeatherIcon:
-    /*
-     enum WeatherIcon: String, Codable {
-         case the04D
-         case the04N
-         case the10D
-         case the10N
-     }
-     */
-    
-    
 }

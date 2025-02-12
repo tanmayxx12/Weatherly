@@ -10,7 +10,6 @@ import SwiftUI
 struct ListRowView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
     let weather: WeatherDataModel
-//    let viewModel: WeatherViewModel
     
     var body: some View {
         HStack {
@@ -35,7 +34,7 @@ struct ListRowView: View {
                 
                 HStack {
                     Text("H: \(viewModel.formatTemperature(weather.forecast.first?.main.tempMax ?? 0))°")
-                    Text("H: \(viewModel.formatTemperature(weather.forecast.first?.main.tempMax ?? 0))°")
+                    Text("L: \(viewModel.formatTemperature(weather.forecast.first?.main.tempMin ?? 0))°")
                 }
             }
         }

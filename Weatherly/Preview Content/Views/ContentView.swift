@@ -10,26 +10,14 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
     @State var location: String = ""
-    @State private var editMode: EditMode = .inactive
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
-                
-//                List(viewModel.locationsArray, id: \.city.id) { weather in
-//                    NavigationLink {
-//                        DetailView(weather: weather)
-//                    } label: {
-//                        ListRowView(weather: weather)
-//                    }
-//                }
-//                .listStyle(.plain)
-                
                 List{
                     ForEach(viewModel.locationsArray, id: \.city.id) { weather in
                         NavigationLink {
                             DetailView(weather: weather)
-                                .padding(6)
                         } label: {
                             ListRowView(weather: weather)
                         }
@@ -37,6 +25,7 @@ struct ContentView: View {
                     .onDelete(perform: viewModel.deleteLocation)
                     .onMove(perform: viewModel.moveLocation)
                 }
+                .listStyle(.insetGrouped)
                 
             }
             .navigationTitle("Weather")
@@ -90,7 +79,7 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environmentObject(WeatherViewModel(isPreview: true))
+        .environmentObject(WeatherViewModel(isPreview: false))
 }
 
 

@@ -22,8 +22,6 @@ final class WeatherViewModel: ObservableObject {
     // Adding a new property to store the searched city name:
     @Published var searchedCity: String = ""
     
-   
-    
     var appError: AppError? = nil
     
     struct AppError: Identifiable {
@@ -66,9 +64,9 @@ final class WeatherViewModel: ObservableObject {
         }
     }
     
-    
     // Fetches weather data based on latitude and longitude:
     func getWeatherForecast(for location: String) {
+        let apiKey: String = "1a363aa93280a7622d9434234fc1f60a"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E, MMMd, d"
         let apiService = APIService.shared
@@ -81,7 +79,7 @@ final class WeatherViewModel: ObservableObject {
                 if let latitude = placemarks.first?.location?.coordinate.latitude,
                    let longitude = placemarks.first?.location?.coordinate.longitude {
                     
-                    let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=1a363aa93280a7622d9434234fc1f60a&units=metric"
+                    let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
                 
                     let weather: WeatherDataModel = try await apiService.getJSON(urlString: urlString, dateDecodingStrategy: .secondsSince1970)
                     DispatchQueue.main.async {
@@ -92,7 +90,6 @@ final class WeatherViewModel: ObservableObject {
                         self.weather?.city.name = self.searchedCity
                         
                         // Preventing duplicate locations from being added in the locationsArray:
-                        // Made a change here, created a modified weather variable: 
                         if let modifiedWeather = self.weather ,
                            !self.locationsArray.contains(where: { $0.city.name.lowercased() == modifiedWeather.city.name.lowercased() }) {
                             self.locationsArray.append(modifiedWeather)
@@ -131,17 +128,12 @@ final class WeatherViewModel: ObservableObject {
         }
     }
     
-    func toggleTemperatureUnit() {
-        isFahrenheit.toggle()
-        storedIsFahrenheit = isFahrenheit
-    }
-    
     // Method to delete the item in the list:
     func deleteLocation(at indexSet: IndexSet) {
         locationsArray.remove(atOffsets: indexSet)
     }
     
-    // Method to move locations in the list:
+    // Method to move items in the list:
     func moveLocation(from: IndexSet, to: Int) {
         locationsArray.move(fromOffsets: from, toOffset: to)
     }
@@ -164,5 +156,3 @@ extension WeatherViewModel {
     
 }
 
-
-// URL: "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=1a363aa93280a7622d9434234fc1f60a&units=metric"

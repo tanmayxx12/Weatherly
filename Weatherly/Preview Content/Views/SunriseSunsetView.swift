@@ -15,6 +15,7 @@ struct SunriseSunsetView: View {
             Text("Sunrise")
                 .font(.title3)
                 .bold()
+                .padding(.leading)
             
             Image(systemName: "sunrise.fill")
                 .foregroundStyle(.yellow)
@@ -35,14 +36,12 @@ struct SunriseSunsetView: View {
             
             Text("\(weather.city.sunset.toDateString(format: "HH:mm"))")
                 .bold()
+                .padding(.trailing)
             
         }
-        .frame(height: 60)
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal)
+        .frame(width: 370, height: 60)
         .background(.ultraThinMaterial)
         .cornerRadius(10)
-        .padding(.horizontal)
     }
 }
 

@@ -10,7 +10,6 @@ import SwiftUI
 struct DailyForecastView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
     let weather: WeatherDataModel
-//    let viewModel: WeatherViewModel
     
     var body: some View {
         
@@ -36,7 +35,6 @@ struct DailyForecastView: View {
                          ProgressView()
                      }
                      Text("\(dailyForecast.main.capitalized)")
-                     Spacer()
                  }
                 
                  Spacer()
@@ -53,6 +51,7 @@ struct DailyForecastView: View {
                      Spacer()
                  }
              }
+             .frame(width: 370)
              .background(.ultraThinMaterial)
              .cornerRadius(10)
          }

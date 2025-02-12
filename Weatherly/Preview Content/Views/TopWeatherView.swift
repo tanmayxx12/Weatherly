@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct TopWeatherView: View {
-    let weather: WeatherDataModel
-//    let viewModel: WeatherViewModel
     @EnvironmentObject var viewModel: WeatherViewModel
+    let weather: WeatherDataModel
     
     var body: some View {
         HStack {
@@ -28,15 +27,26 @@ struct TopWeatherView: View {
             
             Spacer()
             
-            AsyncImage(url: weather.forecast.first?.weather.first?.weatherIconURL) { image in
-                image
-                    .frame(width: 120, height: 120)
-            } placeholder: {
-                ProgressView()
+            VStack {
+                AsyncImage(url: weather.forecast.first?.weather.first?.weatherIconURL) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                        .shadow(radius: 5, x: 0, y: 4)
+                } placeholder: {
+                    ProgressView()
+                }
+                
+                Spacer()
+                
+                Text("\(weather.forecast.first?.weather.first?.description.capitalized ?? "")")
+                    .font(.headline)
+                    .padding(.bottom, 18)
             }
+            .padding(.leading)
         }
-        .frame(height: 130)
-        .frame(maxWidth: .infinity)
+        .frame(width: 340, height: 130)
         .padding(.horizontal)
         .background(.ultraThinMaterial)
         .cornerRadius(10)

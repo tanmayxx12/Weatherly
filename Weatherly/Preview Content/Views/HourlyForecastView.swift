@@ -12,7 +12,7 @@ struct HourlyForecastView: View {
     let weather: WeatherDataModel
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
+
             HStack(spacing: 10) {
                 ForEach(weather.forecast.prefix(10), id: \.date) { hourly in
                     VStack(spacing: 8) {
@@ -49,10 +49,6 @@ struct HourlyForecastView: View {
                     .cornerRadius(10)
                 }
             }
-            .padding(.horizontal)
-        }
-        .frame(height: 140)
-        .padding(6)
     }
 }
 

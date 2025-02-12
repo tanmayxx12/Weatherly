@@ -10,10 +10,9 @@ import SwiftUI
 struct IndicatorsView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
     let weather: WeatherDataModel
-//    let viewModel: WeatherViewModel
     
     var body: some View {
-        HStack {
+        HStack(spacing: 6) {
             // 1. Feels Like:
             VStack(alignment: .center) {
                 HStack {
@@ -54,7 +53,7 @@ struct IndicatorsView: View {
                     .padding(.top, 5)
             }
             .frame(width: 110, height: 120)
-            .padding(.horizontal, 5)
+            .padding(.trailing, 5)
             .background(.ultraThinMaterial)
             .cornerRadius(10)
             .padding(.horizontal, 2)
@@ -76,12 +75,14 @@ struct IndicatorsView: View {
                     .padding(.top, 5)
             }
             .frame(width: 110, height: 120)
-            .padding(.horizontal, 5)
+
             .background(.ultraThinMaterial)
             .cornerRadius(10)
             .padding(.horizontal, 2)
             .padding(.trailing)
         }
+        .frame(width: 370)
+        .padding(.horizontal)
     }
 }
 
