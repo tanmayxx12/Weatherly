@@ -3,6 +3,7 @@
 ## Description
 Weatherly is an iOS weather application that provides real-time weather information with a dynamic user interface. The app offers detailed weather forecasts, hourly updates, and 
 comprehensive weather metrics while adapting its appearance based on current weather conditions and time of day.
+<br>
 ![WeatherlyScreenRecording](WeatherlyScreenRecording.gif)
 
 ## Features 🌟
