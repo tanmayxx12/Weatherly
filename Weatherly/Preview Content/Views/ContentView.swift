@@ -88,8 +88,6 @@ struct ContentView: View {
                         viewModel.getWeatherForecast(for: location)
                     }
                 }
-                
-                
             }
         }
     }

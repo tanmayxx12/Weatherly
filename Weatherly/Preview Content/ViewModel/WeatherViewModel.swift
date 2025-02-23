@@ -67,6 +67,8 @@ final class WeatherViewModel: ObservableObject {
     // Fetches weather data based on latitude and longitude:
     func getWeatherForecast(for location: String) {
         let apiKey: String = "1a363aa93280a7622d9434234fc1f60a"
+        let trimmedLocation = location.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E, MMMd, d"
         let apiService = APIService.shared
@@ -75,27 +77,56 @@ final class WeatherViewModel: ObservableObject {
         
         Task {
             do {
-                let placemarks = try await CLGeocoder().geocodeAddressString(location)
-                if let latitude = placemarks.first?.location?.coordinate.latitude,
-                   let longitude = placemarks.first?.location?.coordinate.longitude {
-                    
-                    let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
+                let placemarks = try await CLGeocoder().geocodeAddressString(trimmedLocation)
+//                if let latitude = placemarks.first?.location?.coordinate.latitude,
+//                   let longitude = placemarks.first?.location?.coordinate.longitude {
+//                    
+//                    let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
+//                
+//                    let weather: WeatherDataModel = try await apiService.getJSON(urlString: urlString, dateDecodingStrategy: .secondsSince1970)
+//                    DispatchQueue.main.async {
+//                        self.isLoading = true
+//                        self.weather = weather
+//                        
+//                        // Override the city name with what the user typed:
+//                        self.weather?.city.name = self.searchedCity
+//                        
+//                        // Preventing duplicate locations from being added in the locationsArray:
+//                        if let modifiedWeather = self.weather ,
+//                           !self.locationsArray.contains(where: { $0.city.name.lowercased() == modifiedWeather.city.name.lowercased() }) {
+//                            self.locationsArray.append(modifiedWeather)
+//                        }
+//                        
+//                    }
+//                }
                 
-                    let weather: WeatherDataModel = try await apiService.getJSON(urlString: urlString, dateDecodingStrategy: .secondsSince1970)
+                guard let placemark = placemarks.first,
+                      let latitude = placemark.location?.coordinate.latitude,
+                      let longitude = placemark.location?.coordinate.longitude,
+                      // Check if the placemark has a meaningful name or locality:
+                      let placemarkName = placemark.locality ?? placemark.name,
+                      placemarkName.lowercased().contains(trimmedLocation.lowercased()) else {
                     DispatchQueue.main.async {
-                        self.isLoading = true
-                        self.weather = weather
-                        
-                        // Override the city name with what the user typed:
-                        self.weather?.city.name = self.searchedCity
-                        
-                        // Preventing duplicate locations from being added in the locationsArray:
-                        if let modifiedWeather = self.weather ,
-                           !self.locationsArray.contains(where: { $0.city.name.lowercased() == modifiedWeather.city.name.lowercased() }) {
-                            self.locationsArray.append(modifiedWeather)
-                        }
-                        
+                        self.appError = AppError(errorString: "Please enter a valid location")
                     }
+                    return
+                }
+                
+                let urlString = "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
+                let weather: WeatherDataModel = try await apiService.getJSON(urlString: urlString, dateDecodingStrategy: .secondsSince1970)
+                DispatchQueue.main.async {
+                    self.isLoading = true
+                    self.weather = weather
+                    
+                    // Override the city name with what the user typed:
+                    self.weather?.city.name = self.searchedCity
+                    
+                    // Preventing duplicate locations from being added in the locationsArray:
+                    if let modifiedWeather = self.weather ,
+                       !self.locationsArray.contains(where: { $0.city.name.lowercased() == modifiedWeather.city.name.lowercased() }) {
+                        self.locationsArray.append(modifiedWeather)
+                    }
+                    
                 }
             } catch let error as CLError {
                 DispatchQueue.main.async {

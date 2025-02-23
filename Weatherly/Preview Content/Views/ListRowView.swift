@@ -57,9 +57,9 @@ struct ListRowView: View {
             .foregroundStyle(.white)
             .padding()
             .background(.ultraThinMaterial)
+            .cornerRadius(20)
             .frame(height: 100)
             .frame(maxWidth: .infinity)
-            
             .padding(.horizontal)
             .cornerRadius(20)
         }
